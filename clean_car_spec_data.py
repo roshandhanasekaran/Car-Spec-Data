@@ -15,16 +15,6 @@ import seaborn as sns
 file_path = 'Car_Spec_Data_csv.csv'
 df = pd.read_csv(file_path)
 
-# Generate summary statistics
-summary_stats = df.describe()
-
-# Save summary statistics to a file
-with open('summary.txt', 'w') as f:
-    f.write(summary_stats.to_string())
-
-# Print summary statistics to the console
-print(summary_stats)
-
 # Calculate the number of null values in each column
 null_counts = df.isnull().sum()
 
@@ -40,9 +30,9 @@ plt.xticks(rotation=90)
 for p in bar_plot.patches:
     bar_plot.annotate(format(p.get_height(), '.0f'),
                       (p.get_x() + p.get_width() / 2., p.get_height()),
-                      ha = 'center', va = 'center',
-                      xytext = (0, 10),
-                      textcoords = 'offset points')
+                      ha='center', va='center',
+                      xytext=(0, 10),
+                      textcoords='offset points')
 
 # Remove plot borders
 sns.despine()
@@ -50,22 +40,10 @@ sns.despine()
 # Save the plot
 plt.savefig('null_values_plot.png')
 
+# Append the plot to a markdown file
+with open('plot.md', 'w') as f:
+    f.write("# Null Values Plot\n\n")
+    f.write("![Null Values Plot](null_values_plot.png)")
+
 # Show the plot
-plt.show()
-
-# Bar plot for categorical variable 'Car_Body'
-plt.figure(figsize=(15, 6))
-sns.countplot(data=df, x='Car_Body')
-plt.title('Distribution of Car Body Types')
-plt.xlabel('Car Body Type')
-plt.ylabel('Count')
-sns.despine()
-plt.show()
-
-
-
-# Heatmap for missing values
-plt.figure(figsize=(12, 8))
-sns.heatmap(df.isnull(), cbar=False, cmap='viridis')
-plt.title('Heatmap of Missing Values')
 plt.show()
