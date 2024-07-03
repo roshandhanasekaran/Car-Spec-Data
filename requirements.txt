@@ -1,10 +1,10 @@
-plotly
+#plotly
 seaborn
 matplotlib
 numpy
 pandas
-dash-bootstrap-components
-dash
+#dash-bootstrap-components
+#dash
 pandas
-pyngrok
+#pyngrok
 tabulate
