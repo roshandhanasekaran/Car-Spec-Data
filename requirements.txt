@@ -1,4 +1,6 @@
 plotly
+seaborn
+matplotlib
 numpy
 pandas
 dash-bootstrap-components
