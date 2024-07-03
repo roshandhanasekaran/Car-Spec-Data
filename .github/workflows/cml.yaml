@@ -24,7 +24,7 @@ jobs:
           python clean_car_spec_data.py
       - name: Create Report
         run: |
-          echo "# Null Values Plot" > report.md
+          echo "# Null Values Plot" >> report.md
           echo "![Null Values Plot](./null_values_plot.png?raw=true)" >> report.md
       - name: Write CML Report
         env:
