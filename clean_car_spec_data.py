@@ -8,7 +8,6 @@ Original file is located at
 """
 
 import pandas as pd
-import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -18,10 +17,13 @@ df = pd.read_csv(file_path)
 
 # Generate summary statistics
 summary_stats = df.describe()
-summary_stats
 
-import matplotlib.pyplot as plt
-import seaborn as sns
+# Save summary statistics to a file
+with open('summary.txt', 'w') as f:
+    f.write(summary_stats.to_string())
+
+# Print summary statistics to the console
+print(summary_stats)
 
 # Calculate the number of null values in each column
 null_counts = df.isnull().sum()
@@ -45,6 +47,10 @@ for p in bar_plot.patches:
 # Remove plot borders
 sns.despine()
 
+# Save the plot
+plt.savefig('null_values_plot.png')
+
+# Show the plot
 plt.show()
 
 # Bar plot for categorical variable 'Car_Body'
@@ -55,7 +61,6 @@ plt.xlabel('Car Body Type')
 plt.ylabel('Count')
 sns.despine()
 plt.show()
-
 
 # Box plot for 'Battery (kWh)' by 'Car_Body'
 plt.figure(figsize=(12, 6))
@@ -69,7 +74,7 @@ plt.show()
 
 # Histogram for 'Battery (kWh)'
 plt.figure(figsize=(10, 6))
-sns.histplot(df['Battery (kWh)'].dropna(), bins=30, kde=True)
+sns.histplot(df['Battery (kwh)'].dropna(), bins=30, kde=True)
 plt.title('Distribution of Battery (kWh)')
 plt.xlabel('Battery (kWh)')
 plt.ylabel('Frequency')
