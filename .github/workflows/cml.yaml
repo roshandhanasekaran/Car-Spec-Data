@@ -24,10 +24,8 @@ jobs:
           python clean_car_spec_data.py
       - name: Create Report
         run: |
-          echo "## Plots" >> report.md
-          echo "### Null Values Plot" >> report.md
-          vl2png null_values_plot.png -s 1.5 > null_values_plot_converted.png
-          echo "![](./null_values_plot_converted.png)" >> report.md
+          echo "# Null Values Plot" > report.md
+          echo "![Null Values Plot](./null_values_plot.png?raw=true)" >> report.md
       - name: Write CML Report
         env:
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
