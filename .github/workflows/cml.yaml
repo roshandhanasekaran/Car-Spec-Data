@@ -19,7 +19,7 @@ jobs:
 
       - name: Install CML
         run: |
-          pip install cml
+          npm install -g @dvcorg/cml
 
       - name: Run Data Cleaning Script
         run: |
