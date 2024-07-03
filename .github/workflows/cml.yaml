@@ -24,14 +24,18 @@ jobs:
         run: |
           python clean_car_spec_data.py
 
-      - name: Upload Plot
-        uses: actions/upload-artifact@v2
-        with:
-          name: plot
-          path: null_values_plot.png
+      - name: Publish Plot
+        id: publish
+        run: |
+          cml-publish null_values_plot.png --md > plot_url.txt
+
+      - name: Create Markdown File
+        run: |
+          echo "# Null Values Plot" > plot.md
+          cat plot_url.txt >> plot.md
 
       - name: Write CML Report
         env:
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
-          cml comment create plot.md --token ${{ secrets.REPO_TOKEN }} --publish
+          cml comment create plot.md --token ${{ secrets.REPO_TOKEN }}
