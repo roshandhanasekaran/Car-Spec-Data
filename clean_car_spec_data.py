@@ -20,7 +20,7 @@ null_counts = df.isnull().sum()
 
 # Create a bar plot for null values
 plt.figure(figsize=(12, 8))
-bar_plot = sns.barplot(x=null_counts.index, y=null_counts.values, palette='viridis')
+bar_plot = sns.barplot(x=null_counts.index, y=null_counts.values, hue=null_counts.index, legend=False, palette='viridis')
 plt.title('Number of Null Values in Each Column')
 plt.xlabel('Columns')
 plt.ylabel('Number of Null Values')
