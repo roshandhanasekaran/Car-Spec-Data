@@ -2,4 +2,6 @@ plotly
 numpy
 pandas
 dash-bootstrap-components
-dash plotly pandas pyngrok
+dash
+pandas
+pyngrok
