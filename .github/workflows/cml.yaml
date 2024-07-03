@@ -36,6 +36,7 @@ jobs:
           path: |
             null_values_plot.png
             summary.md
+            summary.txt
 
       - name: Write CML report
         env:
