@@ -62,24 +62,6 @@ plt.ylabel('Count')
 sns.despine()
 plt.show()
 
-# Box plot for 'Battery (kWh)' by 'Car_Body'
-plt.figure(figsize=(12, 6))
-sns.boxplot(x='Car_Body', y='Battery (kWh)', data=df)
-plt.title('Battery (kWh) by Car Body Type')
-plt.xlabel('Car Body Type')
-plt.ylabel('Battery (kWh)')
-plt.xticks(rotation=90)
-sns.despine()
-plt.show()
-
-# Histogram for 'Battery (kWh)'
-plt.figure(figsize=(10, 6))
-sns.histplot(df['Battery (kwh)'].dropna(), bins=30, kde=True)
-plt.title('Distribution of Battery (kWh)')
-plt.xlabel('Battery (kWh)')
-plt.ylabel('Frequency')
-sns.despine()
-plt.show()
 
 # Heatmap for missing values
 plt.figure(figsize=(12, 8))
