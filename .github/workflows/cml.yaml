@@ -26,16 +26,20 @@ jobs:
           name: null-values-plot
           path: null_values_plot.png
 
+      - name: Get Artifact URL
+        id: get-url
+        run: |
+          echo "artifact_url=https://github.com/${{ github.repository }}/suites/${{ github.run_id }}/artifacts/${{ steps.upload.outputs.artifact_id }}/null-values-plot.png" >> $GITHUB_ENV
+
       - name: Create Comment with Plot
         uses: actions/github-script@v4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const context = github.context;
             const issue_number = context.payload.pull_request ? context.payload.pull_request.number : context.payload.issue.number;
-            const artifact_url = `https://github.com/${context.repo.owner}/${context.repo.repo}/suites/${context.runId}/artifacts/${context.job}/null-values-plot.png`;
             github.rest.issues.createComment({
-              ...context.repo,
-              issue_number,
-              body: `# Null Values Plot\n\n![Null Values Plot](${artifact_url})`
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue_number,
+              body: `# Null Values Plot\n\n![Null Values Plot](${{ env.artifact_url }})`
             });
