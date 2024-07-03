@@ -29,15 +29,16 @@ jobs:
           echo "summary_stats"
           cat summary.txt
 
-      - name: Upload Plot
+      - name: Upload Plot and Summary
         uses: actions/upload-artifact@v2
         with:
-          name: null-values-plot
-          path: null_values_plot.png
+          name: report
+          path: |
+            null_values_plot.png
+            summary.md
 
       - name: Write CML report
         env:
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
-          cat summary.txt >> report.md
-          cml comment create report.md --token ${{ secrets.REPO_TOKEN }}
+          cml comment create summary.md --token ${{ secrets.REPO_TOKEN }}
