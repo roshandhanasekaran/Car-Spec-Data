@@ -8,7 +8,7 @@ jobs:
 
       #- name: Set up Python
        # uses: actions/setup-python@v4
-        #with:
+       # with:
         #  python-version: '3.x'
 
       - name: Install dependencies
@@ -37,7 +37,7 @@ jobs:
 
       - name: Write CML report
         env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
           cat summary.txt >> report.md
-          cml comment create report.md
+          cml comment create report.md --repo-token ${{ secrets.REPO_TOKEN }}
