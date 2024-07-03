@@ -6,10 +6,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      #- name: Set up Python
-       # uses: actions/setup-python@v4
-       # with:
-        #  python-version: '3.x'
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
 
       - name: Install dependencies
         run: |
@@ -40,4 +40,4 @@ jobs:
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
           cat summary.txt >> report.md
-          cml comment create report.md --repo-token ${{ secrets.REPO_TOKEN }}
+          cml comment create report.md --token ${{ secrets.REPO_TOKEN }}
