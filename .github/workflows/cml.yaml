@@ -5,15 +5,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-      - uses: iterative/setup-cml@v1
-      - name: run script
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install CML
+        run: |
+          npm install -g @dvcorg/cml
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run Data Cleaning Script
+        run: |
+          python clean_car_spec_data.py
+
+      - name: Create and Publish Report
         env:
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
-          pip install -r requirements.txt
-          python clean_car_spec_data.py
-
-          echo "## Null Value Count" >report.md
+          echo "## Null Value Count" > report.md
           echo "![](./null_values_plot.png)" >> report.md
-          cml comment create report.md
+          cml comment create report.md --token ${{ secrets.REPO_TOKEN }}
