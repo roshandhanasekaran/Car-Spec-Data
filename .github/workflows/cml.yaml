@@ -34,4 +34,4 @@ jobs:
         env:
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
-          cml comment create plot.md --token ${{ secrets.REPO_TOKEN }}
+          cml comment create plot.md --token ${{ secrets.REPO_TOKEN }} --publish
