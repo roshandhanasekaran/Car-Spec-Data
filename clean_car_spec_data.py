@@ -18,9 +18,12 @@ df = pd.read_csv(file_path)
 # Generate summary statistics
 summary_stats = df.describe()
 
+# Save summary statistics to a text file
+with open('summary.txt', 'w') as f:
+    f.write(summary_stats.to_string())
+
 # Save summary statistics to a markdown file
 summary_stats_md = summary_stats.to_markdown()
-
 with open('summary.md', 'w') as f:
     f.write("# Summary Statistics\n\n")
     f.write(summary_stats_md)
