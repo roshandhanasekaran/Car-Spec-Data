@@ -27,7 +27,6 @@ jobs:
           path: null_values_plot.png
 
       - name: Create and Publish Report
-        id: publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -40,11 +39,11 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
-            const context = github.context;
             const issue_number = context.payload.pull_request ? context.payload.pull_request.number : context.payload.issue.number;
             const body = fs.readFileSync('report.md', 'utf8');
             github.rest.issues.createComment({
-              ...context.repo,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
               issue_number: issue_number,
               body: body
             });
