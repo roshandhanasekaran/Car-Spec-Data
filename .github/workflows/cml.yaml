@@ -1,5 +1,6 @@
 name: spec-data
 on: [push]
+
 jobs:
   run:
     runs-on: ubuntu-latest
@@ -33,4 +34,4 @@ jobs:
         env:
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
-          cml comment create report.md --token ${{ secrets.REPO_TOKEN }}
+          cml comment create report.md
