@@ -11,22 +11,40 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install CML
-        run: |
-          npm install -g @dvcorg/cml
-
       - name: Install dependencies
         run: |
+          pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Run Data Cleaning Script
         run: |
           python clean_car_spec_data.py
 
+      - name: Upload Plot
+        uses: actions/upload-artifact@v2
+        with:
+          name: null-values-plot
+          path: null_values_plot.png
+
       - name: Create and Publish Report
+        id: publish
         env:
-          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "## Null Value Count" > report.md
-          echo "![](./null_values_plot.png)" >> report.md
-          cml comment create report.md --token ${{ secrets.REPO_TOKEN }}
+          echo "## Null Values Plot" > report.md
+          echo "![Null Values Plot](./null_values_plot.png)" >> report.md
+
+      - name: Create GitHub Comment
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const context = github.context;
+            const issue_number = context.payload.pull_request ? context.payload.pull_request.number : context.payload.issue.number;
+            const body = fs.readFileSync('report.md', 'utf8');
+            github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: issue_number,
+              body: body
+            });
