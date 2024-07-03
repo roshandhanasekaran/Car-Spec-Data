@@ -3,10 +3,8 @@ on: [push]
 jobs:
   run:
     runs-on: ubuntu-latest
-    container: ghcr.io/iterative/cml:0-dvc2-base1
     steps:
       - uses: actions/checkout@v3
-      - uses: iterative/setup-cml@v1
 
       #- name: Set up Python
        # uses: actions/setup-python@v4
@@ -18,7 +16,7 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Clean Car Spec Data
+      - name: Run Data Cleaning Script
         run: |
           python clean_car_spec_data.py
 
@@ -27,9 +25,15 @@ jobs:
           echo "summary_stats"
           cat summary.txt
 
+      - name: Upload Plot
+        uses: actions/upload-artifact@v2
+        with:
+          name: null-values-plot
+          path: null_values_plot.png
+
       - name: Write CML report
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cat results.txt >> report.md
+          cat summary.txt >> report.md
           cml comment create report.md
