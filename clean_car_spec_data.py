@@ -18,9 +18,12 @@ df = pd.read_csv(file_path)
 # Generate summary statistics
 summary_stats = df.describe()
 
-# Save summary statistics to a file
-with open('summary.txt', 'w') as f:
-    f.write(summary_stats.to_string())
+# Save summary statistics to a markdown file
+summary_stats_md = summary_stats.to_markdown()
+
+with open('summary.md', 'w') as f:
+    f.write("# Summary Statistics\n\n")
+    f.write(summary_stats_md)
 
 # Print summary statistics to the console
 print(summary_stats)
@@ -40,15 +43,20 @@ plt.xticks(rotation=90)
 for p in bar_plot.patches:
     bar_plot.annotate(format(p.get_height(), '.0f'),
                       (p.get_x() + p.get_width() / 2., p.get_height()),
-                      ha = 'center', va = 'center',
-                      xytext = (0, 10),
-                      textcoords = 'offset points')
+                      ha='center', va='center',
+                      xytext=(0, 10),
+                      textcoords='offset points')
 
 # Remove plot borders
 sns.despine()
 
 # Save the plot
 plt.savefig('null_values_plot.png')
+
+# Append the plot to the markdown file
+with open('summary.md', 'a') as f:
+    f.write("\n\n# Null Values Plot\n\n")
+    f.write("![Null Values Plot](null_values_plot.png)")
 
 # Show the plot
 plt.show()
@@ -61,7 +69,6 @@ plt.xlabel('Car Body Type')
 plt.ylabel('Count')
 sns.despine()
 plt.show()
-
 
 # Heatmap for missing values
 plt.figure(figsize=(12, 8))
