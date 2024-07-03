@@ -16,30 +16,23 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Install CML
+        run: |
+          npm install -g @dvcorg/cml
+
       - name: Run Data Cleaning Script
         run: |
           python clean_car_spec_data.py
 
-      - name: Upload Plot
-        uses: actions/upload-artifact@v2
-        with:
-          name: null-values-plot
-          path: null_values_plot.png
-
-      - name: Get Artifact URL
-        id: get-url
+      - name: Publish Plot and Create Report
+        env:
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
-          echo "artifact_url=https://github.com/${{ github.repository }}/suites/${{ github.run_id }}/artifacts/${{ steps.upload.outputs.artifact_id }}/null-values-plot.png" >> $GITHUB_ENV
+          echo "# Null Values Plot" > report.md
+          cml-publish null_values_plot.png --md >> report.md
 
-      - name: Create Comment with Plot
-        uses: actions/github-script@v4
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const issue_number = context.payload.pull_request ? context.payload.pull_request.number : context.payload.issue.number;
-            github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: issue_number,
-              body: `# Null Values Plot\n\n![Null Values Plot](${{ env.artifact_url }})`
-            });
+      - name: Write CML Report
+        env:
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+        run: |
+          cml comment create report.md --token ${{ secrets.REPO_TOKEN }}
