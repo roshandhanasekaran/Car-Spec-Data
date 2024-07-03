@@ -25,9 +25,10 @@ jobs:
           python clean_car_spec_data.py
 
       - name: Publish Plot
-        id: publish
+        env:
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
-          cml-publish null_values_plot.png --md > plot_url.txt
+          cml-publish null_values_plot.png --md --token ${{ secrets.REPO_TOKEN }} > plot_url.txt
 
       - name: Create Markdown File
         run: |
