@@ -12,7 +12,7 @@ jobs:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           pip install -r requirements.txt
-          clean_car_spec_data.py
+          python clean_car_spec_data.py
 
           echo "## Null Value Count" >report.md
           echo "![](./null_values_plot.png)" >> report.md
