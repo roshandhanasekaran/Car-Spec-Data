@@ -24,22 +24,14 @@ jobs:
         run: |
           python clean_car_spec_data.py
 
-      - name: Display Summary Stats
-        run: |
-          echo "summary_stats"
-          cat summary.txt
-
-      - name: Upload Plot and Summary
+      - name: Upload Plot
         uses: actions/upload-artifact@v2
         with:
-          name: report
-          path: |
-            null_values_plot.png
-            summary.md
-            summary.txt
+          name: plot
+          path: null_values_plot.png
 
-      - name: Write CML report
+      - name: Write CML Report
         env:
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
-          cml comment create summary.md --token ${{ secrets.REPO_TOKEN }}
+          cml comment create plot.md --token ${{ secrets.REPO_TOKEN }}
