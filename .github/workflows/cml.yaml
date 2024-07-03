@@ -9,7 +9,7 @@ jobs:
       - uses: iterative/setup-cml@v1
       - name: run script
         env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
           pip install -r requirements.txt
           python clean_car_spec_data.py
