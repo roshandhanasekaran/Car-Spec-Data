@@ -24,12 +24,10 @@ jobs:
         run: |
           python clean_car_spec_data.py
 
-      - name: Publish Plot and Create Report
-        env:
-          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+      - name: Create Report
         run: |
           echo "# Null Values Plot" > report.md
-          cml-publish null_values_plot.png --md >> report.md
+          echo "![Null Values Plot](./null_values_plot.png)" >> report.md
 
       - name: Write CML Report
         env:
