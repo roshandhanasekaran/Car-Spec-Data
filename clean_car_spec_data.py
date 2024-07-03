@@ -40,10 +40,5 @@ sns.despine()
 # Save the plot
 plt.savefig('null_values_plot.png')
 
-# Append the plot to a markdown file
-with open('plot.md', 'w') as f:
-    f.write("# Null Values Plot\n\n")
-    f.write("![Null Values Plot](null_values_plot.png)")
-
 # Show the plot
 plt.show()
