@@ -19,7 +19,7 @@ jobs:
         run: |
           # Your ML workflow goes here
           pip install -r requirements.txt
-          clen_car_spec_data.py
+          clean_car_spec_data.py
           echo "summary_stats"
           cat summary.txt
       - name: Write CML report
