@@ -19,17 +19,21 @@ jobs:
 
       - name: Install CML
         run: |
-          pip install cml
+          npm install -g @dvcorg/cml
 
       - name: Run Data Cleaning Script
         run: |
           python clean_car_spec_data.py
 
-      - name: Create CML Report
-        env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Report
         run: |
-          # Generate the CML report
-          echo "# Null Values Plot" >> report.md
-          echo "![](./null_values_plot.png)" >> report.md
-          cml comment create report.md
+          echo "# Null Values Plot" > report.md
+          #echo "![Null Values Plot](./null_values_plot.png?raw=true)" >> report.md
+          cml-publish null_values_plot.png --md >> report.md
+
+      - name: Write CML Report
+        env:
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+        run: |
+          #cml comment create report.md
+          cml-send-comment report.md
