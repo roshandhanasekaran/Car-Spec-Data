@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load the data from the uploaded file
-file_path = '/content/Car_Spec_Data_csv.csv'
+file_path = 'Car_Spec_Data_csv.csv'
 df = pd.read_csv(file_path)
 
 # Generate summary statistics
